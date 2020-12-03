@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>hanndomeido</title>
+    <link rel="stylesheet" href="hanndo.css">
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+    var top_pos = -960;
+    var top_pos2 = -960;
+    var top_pos3 = -960;
+    var top_pos4 = -960;
+    var center = 1;
+    var center2 = 1;
+    var center3 = 1;
+    var center4 = 1;
+    var interval_id ;
+    function top_move(pos) {
+        // posには何番目の写真に切り替えるか
+        top_pos = -960 * pos;　//-960 2の場合は-1920 3の場合は-2880
+        $('.top_picture').css('margin-left',top_pos + 'px');
+        center = pos;
+        $('.top_picture img').removeClass('center');
+        $('.top_picture img').eq(pos).addClass('center');
+        $('.page1 span' ).removeClass('select');
+        $('#image' + pos).addClass('select');
+        
+    }
+    function move4() { 
+        // top_moveに4
+        top_move(4);
+    }
+    function move1() {
+        top_move(1);
+    }
+    function move2() {
+        top_move(2);
+    }
+    function move3() {
+        top_move(3);
+    }
+    function move_pos(no,pos) {//noには2,3,4に入るposには1,2,3,が入る
+        
+        var left = -960 *pos;
+        if(no===2 ) {    
+            $('.block').css('margin-left',left + 'px');
+            top_pos2 = left;
+            center2 = pos;
+            $('.page2 span').removeClass('select2');
+            $('#image2_' + center2).addClass('select2');
+        }else if (no === 3) {
+            $('.picture_3').css('margin-left',left + 'px');
+            top_pos3 = left;
+            center3 = pos;
+            $('.page3 span').removeClass('select3');
+            $('#image3_' + center3).addClass('select3');
+        }else if (no === 4){
+            $('.block_4').css('margin-left',left + 'px');
+            top_pos4 = left;
+            center4 = pos;
+            $('.page4 span').removeClass('select4');
+            $('#image4_' + center4).addClass('select4');
+        }   
+    }
+    
+    function move2_1() {
+        move_pos(2,1);
+        
+    }
+    function move2_2() {
+        move_pos(2,2);
+    }
+    function move2_3() {
+        move_pos(2,3);
+    }
+    function move2_4() {
+        move_pos(2,4);
+    }
+    
+    function move3_1() {
+        move_pos(3,1);
+    }
+    function move3_2() {
+        move_pos(3,2);
+    }
+    function move3_3() {
+        move_pos(3,3);
+    }
+    function move3_4() {
+        move_pos(3,4);
+    }
+    
+    function move4_1() {
+        move_pos(4,1);
+    }
+    function move4_2() {
+        move_pos(4,2);
+    }
+    function move4_3() {
+        move_pos(4,3);
+    }
+    
+    function move_left() {
+        top_pos = top_pos +960;
+        center --;
+        $('.top_picture img').removeClass('center');
+        $('.top_picture img').eq(center).addClass('center');
+        $('.page1 span').removeClass('select');
+        $('#image' + center).addClass('select');
+        $('.top_picture').css('margin-left',top_pos + 'px');
+        if(top_pos === 0) {
+            setTimeout(move_front, 500);
+        } 
+    }
+    function move_front() {
+        $('.top_picture').addClass('front');
+        move4 ();
+        setTimeout(function(){
+            $('.top_picture').removeClass('front');
+        },100);
+    }
+    function move_left2() {
+        top_pos2 = top_pos2 +960;
+        center2 --;
+       
+        $('.page2 span').removeClass('select2');
+        $('#image2_' + center2).addClass('select2');
+        $('.block').css('margin-left',top_pos2 + 'px');
+        if (top_pos2 === 0) {
+            setTimeout(move_front2, 500);
+        }
+    }
+    function move_front2() {
+        $('.block').addClass('front');
+        move_pos (2,4);
+        setTimeout(function(){
+            $('.block').removeClass('front');
+        },100);
+    }
+    function move_left3() {
+        top_pos3 = top_pos3 +960;
+        center3 --;
+        $('.page3 span').removeClass('select3');
+        $('#image3_' + center3).addClass('select3');
+        $('.picture_3').css('margin-left',top_pos3 + 'px');
+        if (top_pos3 === 0) {
+            setTimeout(move_front3, 500);
+        }
+    }
+    function move_front3() {
+        $('.picture_3').addClass('front');
+        move_pos (3,4);
+        setTimeout(function(){
+            $('.picture_3').removeClass('front');
+        },100);
+    }
+    function move_left4() {
+        top_pos4 = top_pos4 +960;
+        center4 --;
+        $('.page4 span').removeClass('select4');
+        $('#image4_' + center4).addClass('select4');
+        $('.block_4').css('margin-left',top_pos4 + 'px');
+        if (top_pos4 === 0) {
+            setTimeout(move_front4, 500);
+        }
+    }
+    function move_front4() {
+        $('.block_4').addClass('front');
+        move_pos (4,3);
+        setTimeout(function(){
+            $('.block_4').removeClass('front');
+        },100);
+    }
+    
+    function move_back() {
+        $('.top_picture').addClass('back');
+        move1 ();
+        setTimeout(function(){
+            $('.top_picture').removeClass('back');
+        },100);
+    }
+    function move_back2() {
+        $('.block').addClass('back');
+        move_pos (2,1);
+        setTimeout(function(){
+            $('.block').removeClass('back');
+        },100);
+    }
+    function move_back3() {
+        $('.picture_3').addClass('back');
+        move_pos (3,1);
+        setTimeout(function(){
+            $('.picture_3').removeClass('back');
+        },100);
+    }
+    function move_back4() {
+        $('.block_4').addClass('back');
+        move_pos (4,1);
+        setTimeout(function(){
+            $('.block_4').removeClass('back');
+        },100);
+    }
+    function move_right() {
+        top_pos = top_pos -960;
+        center ++;
+        $('.top_picture img').removeClass('center');
+        $('.top_picture img').eq(center).addClass('center');
+        $('.page1 span').removeClass('select');
+        $('#image' + center).addClass('select');
+        $('.top_picture').removeClass('back');
+        $('.top_picture').css('margin-left',top_pos + 'px');
+            if(top_pos ===-4800) {
+                setTimeout(move_back, 500);
+        }
+    }
+    function move_right2() {
+        top_pos2 = top_pos2 -960;
+        center2 ++;
+        
+        $('.page2 span').removeClass('select2');
+        $('#image2_' + center2).addClass('select2');
+        $('.block').removeClass('back');
+        $('.block').css('margin-left',top_pos2 + 'px');
+            if(top_pos2 ===-4800) {
+                setTimeout(move_back2, 500);
+        }
+    }
+    function move_right3() {
+        top_pos3 = top_pos3 -960;
+        center3 ++;
+        $('.page3 span').removeClass('select3');
+        $('#image3_' + center3).addClass('select3');
+        $('.picture_3').removeClass('back');
+        $('.picture_3').css('margin-left',top_pos3 + 'px');
+            if(top_pos3 ===-4800) {
+                setTimeout(move_back3, 500);
+        }
+    }
+    function move_right4() {
+        top_pos4 = top_pos4 -960;
+        center4 ++;
+        $('.page4 span').removeClass('select4');
+        $('#image4_' + center4).addClass('select4');
+        $('.block_4').removeClass('back');
+        $('.block_4').css('margin-left',top_pos4 + 'px');
+            if(top_pos4 ===-3840) {
+                setTimeout(move_back4, 500);
+        }
+    }
+    
+   
+    
+    function top_menu() {
+        $('.menu1').addClass('active');
+    }
+    function menu1() {
+        $('.menu1').removeClass('active');
+        
+    }
+    function stop() {
+        clearInterval(interval_id);
+    }
+    $(document).ready(
+        function() {
+            
+            $('#image1').click(move1);
+            $('#image2_1').click(move2_1);
+            $('#image3_1').click(move3_1);
+            $('#image4_1').click(move4_1);
+            $('#image2').click(move2);
+            $('#image2_2').click(move2_2);
+            $('#image3_2').click(move3_2);
+            $('#image4_2').click(move4_2);
+            $('#image3').click(move3);
+            $('#image2_3').click(move2_3);
+            $('#image3_3').click(move3_3);
+            $('#image4_3').click(move4_3);
+            $('#image4').click(move4);
+            $('#image2_4').click(move2_4);
+            $('#image3_4').click(move3_4);
+            $('#top_left').click(move_left);
+            $('#top_left2').click(move_left2);
+            $('#top_left3').click(move_left3);
+            $('#top_left4').click(move_left4);
+            $('#top_right').click(move_right);
+            $('#top_right2').click(move_right2);
+            $('#top_right3').click(move_right3);
+            $('#top_right4').click(move_right4);
+            $('.top_picture').click(stop);
+            $('#m1').click(top_menu);
+            $('#toziru').click(menu1);
+            $('.top_picture img').eq(1).addClass('center');
+            $(window).scroll(function() {
+                console.log($(this).scrollTop());
+                if ($(this).scrollTop()>134) {
+                    $('.header_navi').addClass('active');
+                }else {
+                    $('.header_navi').removeClass('active');
+                }
+            })
+                // 4秒事にtop_pictureがスライドする
+            // interval_id = setInterval(move_right,4000);
+            // interval_id = setInterval(move_right2,4000);
+        }
+     )
+    
+    </script>
+</head>
+
+<body>
+    <div class="head_box">
+        <header class="header">
+            <div class="header_wrap">
+                <h2>高級な皮に魅せられてハンドメイドの世界に！</h2>
+            </div>
+            <div class="top_rogo">
+              <img src="img/Takatosi.jpg" >
+            </div>
+        <!--<form action="#">-->
+        <!--    <input id="key" type="text" name="Takatosi" placeholder="検索">-->
+        <!--    <input type="submit" value="検索">-->
+        <!--</form>-->
+            <!--<div class ="sample1"><h1>Takatosi</h1></div>-->
+        <div class="header_navi">
+            <ul class="top_menu">
+                <li><a id = "m1">メニュー</a></li>
+                <li><a href="#">ハンドメイドとは</a></li>
+                <li><a href="#">御注文について</a></li>
+                <li><a href="#">ログイン</a></li>
+                <li class="stamp"><a href="#">会員登録</a></li>
+            </ul>
+            <div class="menu1">
+                <img src="aikon/tozi138_b.jpg" id ="toziru">
+                <ul>
+                    <li>menu1</li>
+                    <li>menu2</li>
+                    <li>menu3</li>
+                </ul>
+                <ul>
+                    <p>GATEGORY</p>
+                    <li><a href="0-0.html">長財布</a></li>
+                    <li><a href="#">二ﾂ折り・ミニ財布</a></li>
+                    <li><a href="#">小銭入れ</a></li>
+                    <li><a href="#">マネークリップ</a></li>
+                </ul>
+                <!--<form action="#">-->
+                <!--    <p>お名前</p>-->
+                <!--    <input type="text" placeholder="名字名前">-->
+                <!--    <p>メールアドレス</p>-->
+                <!--    <input type="text" email="メールアドレス">-->
+                <!--    <p>電話番号</p>-->
+                <!--    <input type="text" tel="電話番号">-->
+                <!--</form>-->
+            </div>
+        </div>
+        </header>
+        <div class ="picture_box">
+            <div class="window">
+                <img src="aikon/left.png" class="arrow_right" id="top_right">
+                <div class="top_picture">
+                    <img src="img/500top_10.jpg">
+                    <img src="img/500top_1.jpg">
+                    <img src="img/500top_8.jpg">
+                    <img src="img/500top_3.jpg">
+                    <img src="img/500top_10.jpg">
+                    <img src="img/500top_1.jpg">
+                </div>
+                <img src="aikon/right.png" class="arrow_left" id="top_left">
+            </div>
+        </div>
+        <p class ="page1">
+            <span id="image1" class="select"></span>
+            <span id="image2"></span>
+            <span id="image3"></span>
+            <span id="image4"></span>
+        </p> 
+    <main>
+        <!--<img src="../images/img002.gif" alt="サンプル画像" style="zoom: normal;">-->
+        <!--<img src="../images/img002.gif" alt="サンプル画像" style="zoom: 1.5;">-->
+        <!--<img src="../images/img002.gif" alt="サンプル画像" style="zoom: 200%;">-->
+        <!--<p style="zoom: 400%;">拡大表示します。</p>-->
+        <h3>レザーの素晴らしさは</h3>
+        
+            <div class ="picture_box2">
+                <div class="window">
+                    <div class ="block">
+                        <div class="picture_2">
+                            <div>
+                                <img src="img2/391x260_2_8.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/391x260_2_10.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/391x260_2_12.jpg">
+                                <p>カードケース</p>
+                            </div>
+                        </div>
+                        <div class="picture_2">    
+                            <div>
+                                <img src="img2/342x260_2_3.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/350x262_2_9.jpg">
+                                <p>三ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/389x260_t2.jpg">
+                                <p>メモ帳</p>
+                            </div>
+                        </div>
+                        <div class="picture_2">
+                            <div>
+                                <img src="img2/390x260_2_7.jpg">
+                                <p>小銭入れ財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/390x260_2_13.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/390x260_t4.jpg">
+                                <p>ビジネスマンバック</p>
+                            </div>
+                        </div>
+                        <div class="picture_2">
+                            <div>
+                                <img src="img2/390x260_t5.jpg">
+                                <p>二ﾂ折り財布・メモ帳</p>
+                            </div>
+                            <div>
+                                <img src="img2/391x260_2_4.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/391x260_2_5.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                        </div>
+                        <div class="picture_2">
+                            <div>
+                                <img src="img2/391x260_2_8.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/391x260_2_10.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/391x260_2_12.jpg">
+                                <p>カードケース</p>
+                            </div>
+                        </div>    
+                        <div class="picture_2">    
+                            <div>
+                                <img src="img2/342x260_2_3.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/350x262_2_9.jpg">
+                                <p>三ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/389x260_t2.jpg">
+                                <p>メモ帳</p>
+                            </div>
+                                
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        
+            <p class ="page2">
+                <img src="aikon/right.png"class="arrow_right2" id="top_left2">
+                <span id="image2_1" class="select2"></span>
+                <span id="image2_2"></span>
+                <span id="image2_3"></span>
+                <span id="image2_4"></span>
+                <img src="aikon/left.png" class="arrow_left2" id="top_right2">
+            </p> 
+        
+            <div class ="picture_box3">
+                <div class="window">
+                    <div class="picture_3">
+                        <div class="block6">
+                            <div>
+                                <img src="img2/391x261_3_1.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                            <div>
+                                <img src="img2/392x260_t1.jpg">
+                                <p>皮小物</p>
+                            </div>
+                            <div>
+                                <img src="img2/460x259_2_1.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            
+                            <div>
+                                <img src="img2/bag-347x260.jpg">
+                                <p>バック</p>
+                            </div>
+                            <div>
+                                <img src="img2/bag-392x260.jpg">
+                                <p>財布・小物入れ</p>
+                            </div>
+                            <div>
+                                <img src="img2/black-357x260.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                        </div>   
+                        
+                        <div class="block6">
+                            <div>
+                                <img src="img2/handbag-390x260.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                            <div>
+                                <img src="img2/leather-390x260.jpg">
+                                <p>カードケース</p>
+                            </div>
+                            <div>
+                                <img src="img2/old-347x260.jpg">
+                                <p>メモ帳</p>
+                            </div>
+                        
+                            <div>
+                                <img src="img2/purse-390x260.jpg">
+                                <p>財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/purse-390xa260.jpg">
+                                <p>財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/purse-462x260.jpg">
+                                <p>財布1</p>
+                            </div>
+                        </div>
+                        
+                        <div class="block6">
+                           <div>
+                                <img src="img2/purse-462xa260.jpg">
+                                <p>三つ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/purses-390x260.jpg">
+                                <p>露店バック</p>
+                            </div>
+                            <div>
+                                <img src="img2/purses-526x260.jpg">
+                                <p>皮財布</p>
+                            </div>
+                            
+                            <div>
+                                <img src="img2/shelf-396x260.jpg">
+                                <p>皮財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/wallets-392x260.jpg">
+                                <p>財布</p>
+                            </div>
+                            <div>
+                                <img src="img/389x260_t2.jpg">
+                                <p>メモ帳</p>
+                            </div>
+                        </div>
+                        
+                        <div class="block6">
+                            <div>
+                                <img src="img2/wallets-392x260.jpg">
+                                <p>財布</p>
+                                </div>
+                            <div>
+                                <img src="img2/bag-392x260.jpg">
+                                <p>財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/391x261_3_1.jpg">
+                            <p>ショルダーバック3</p>
+                            </div>  
+                            <div>
+                                <img src="img2/391x260_2_10.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/shelf-396x260.jpg">
+                                <p>財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/purses-390x260.jpg">
+                                <p>露店バック</p>
+                            </div>
+                        </div>
+                        
+                        <div class="block6">
+                           <div>
+                                <img src="img2/391x261_3_1.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                            <div>
+                                <img src="img2/392x260_t1.jpg">
+                                <p>皮小物</p>
+                            </div>
+                            <div>
+                                <img src="img2/460x259_2_1.jpg">
+                                <p>二ﾂ折り財布</p>
+                            </div>
+                            
+                            <div>
+                                <img src="img2/bag-347x260.jpg">
+                                <p>スマホケース</p>
+                            </div>
+                            <div>
+                                <img src="img2/bag-392x260.jpg">
+                                <p>カードケース</p>
+                            </div>
+                            <div>
+                                <img src="img2/black-357x260.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                        </div>   
+                            
+                        <div class="block6">
+                            <div>
+                                 <img src="img2/handbag-390x260.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                            <div>
+                                <img src="img2/leather-390x260.jpg">
+                                <p>カードケース</p>
+                            </div>
+                            <div>
+                                <img src="img2/old-347x260.jpg">
+                            <p>メモ帳1</p>
+                            </div>
+                        
+                            <div>
+                                <img src="img2/purse-390x260.jpg">
+                                <p>財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/purse-390xa260.jpg">
+                                <p>財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/purse-462x260.jpg">
+                                <p>財布</p>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+            
+                <p class ="page3">
+                    <img src="aikon/right.png"class="arrow_right3" id="top_left3">
+                    <span id="image3_1" class="select3"></span>
+                    <span id="image3_2"></span>
+                    <span id="image3_3"></span>
+                    <span id="image3_4"></span>
+                    <img src="aikon/left.png"class="arrow_left3" id="top_right3">
+                </p>
+            
+            <div class ="picture_box4">
+                <div class="window">
+                    <div class ="block_4">
+                        <div class="picture_4">
+                            <div>
+                                <img src="img2/handbag-390x260.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                            <div>
+                                <img src="img2/purses-390x260.jpg">
+                                <p>財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/purses-526x260.jpg">
+                                <p>財布</p>
+                            </div>
+                        </div>
+                        <div class="picture_4">    
+                            <div>
+                                <img src="img2/black-357x260.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                            <div>
+                                <img src="img2/shelf-396x260.jpg">
+                                <p>露店バック</p>
+                            </div>
+                            <div>
+                                <img src="img2/wallets-392x260.jpg">
+                                <p>財布</p>
+                            </div>
+                        </div>
+                        <div class="picture_4">
+                            <div>
+                                <img src="img2/black-357x260.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                            <div>
+                                <img src="img2/purse-390xa260.jpg">
+                                <p>財布</p>
+                            </div>
+                            <div>
+                                <img src="img2/purse-462xa260.jpg">
+                                <p>財布</p>
+                            </div>
+                        </div>
+                        <div class="picture_4">
+                            <div>
+                                <img src="img2/handbag-390x260.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                            <div>
+                                <img src="img2/purses-390x260.jpg">
+                                <p>3</p>
+                            </div>
+                            <div>
+                                <img src="img2/purses-526x260.jpg">
+                                <p>3</p>
+                            </div>
+                        </div>
+                        <div class="picture_4">
+                            <div>
+                                <img src="img2/black-357x260.jpg">
+                                <p>ショルダーバック</p>
+                            </div>
+                            <div>
+                                <img src="img2/shelf-396x260.jpg">
+                                <p>露店バック</p>
+                            </div>
+                            <div>
+                                <img src="img2/wallets-392x260.jpg">
+                                <p>財布</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+            <p class ="page4">
+                <img src="aikon/right.png"class="arrow_right4" id="top_left4">
+                <span id="image4_1" class="select4"></span>
+                <span id="image4_2"></span>
+                <span id="image4_3"></span>
+                <img src="aikon/left.png" class="arrow_left4" id="top_right4">
+            </p>
+        
+    </main>
+            
+            <div class="block_body">
+                <div  class="Scrollbar">
+                    <dl>
+                    <h3>News Release</h3>
+                    <dt>2020.05.12.</dt>人気「プエブロ ミニウォレット」からベルト付きの販売を開始しました。</li>
+                    <dt>2020.05.16.</dt>希少な最高級クロコダイル「ナイルクロコダイルレザー」を贅沢に使った『LE’SAC』のラウンドジップ長財布の販売を開始しました。</li>
+                    <dt>2020.05.16.</dt>海外高級ブランドでも愛され続けている山羊革「シェーブル」のアップルウォッチ専用バンドの販売を開始しました。</li>
+                    <dt>2020.05.16.</dt>マットな風合いで落ち着きのある「クロコダイル」のアップルウォッレット専用バンドの販売を開始しました。</li>
+                    </dl>
+                </div>
+                <img src="img2/bitcoin-534x300.jpg" class="cm">
+               
+                
+                
+            
+            
+                <!--<div class="map">-->
+                <!--<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d656.5955614274424!2d139.73522274011577!3d35.654065565684746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sja!2sjp!4v1592982477814!5m2!1sja!2sjp" width="300" height="150" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>-->
+                <!--<video src="IMG_7192.mp4" controls></video>-->
+                <!--<audio autoplay controls>-->
+                    <!--<source src="natu-sun.mp3" type="audio/mp3">-->
+                <!--</div>-->
+            </div>
+        <div class="footer_box">
+            <footer class="footer">
+                
+                
+                
+                
+                
+                
+                
+                
+                <ul>
+                    <li><a href="#">サイトマップ</a></li>
+                    <li><a href="#">ライパシーポリシー</a></li>
+                    <li><a href="#">お問い合わせ</li>
+                    <li class="stamp"><a href="#">ご利用ガイド</a></li>
+                </ul>
+                <p><small>Copyright &copy;  2020 高品質の皮をオーダーメイドで作る　Takatosi 　　Rights Reserved.</small></p>
+                
+            </footer>
+        </div>
+</body>
+
+</html>
