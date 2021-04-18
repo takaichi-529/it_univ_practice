@@ -4,13 +4,13 @@ body {
     margin-top: 0;
     margin-bottom: 0;
     height: 100%;
-    background-color: #DCDCDC;
+     background-color: #DCDCDC
 }
 html {
     height: 100%;
 }
 .header_box {
-    background-color: #DCDCDC;
+    background-color: #CC3399;
     margin: 0 auto;
     min-width: 960px;
     width: 100%;
@@ -387,6 +387,8 @@ iframe {
 }
 
 
+
+
 .footer_box {
     background-color: #000000;
     margin: 0 auto;
@@ -437,3 +439,5 @@ footer p {
     color: #fc8833;
     display: block;
 }
+
+
