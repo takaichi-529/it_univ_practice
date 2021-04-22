@@ -423,6 +423,10 @@ a {
     color: #cccccc;
     text-decoration: none;
 }
+.footer_rogo {
+    text-align: center;
+    border-bottom: solid 1px #cccccc;
+}
 footer p {
     text-align: center;
     color: #cccccc;
